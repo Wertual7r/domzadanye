@@ -1,0 +1,80 @@
+# ДЗ 4
+
+# Вычислить число c заданной точностью d
+#
+# Пример:
+#
+# - при $d = 0.001, π = 3.141.$    $10^{-1} ≤ d ≤10^{-10}$
+
+d=int(input('введите количество знаков после запятой, но не более 10: '))
+if d <= 10:
+    r=float(input())
+    if r%1 != 0:
+        print (round(r, d))
+    else:
+        print (str(round(r, d)) + "0"*(d-1))
+else:
+    print ("вне диапазона")
+
+# Задайте натуральное число N. Напишите программу, которая составит список простых множителей числа N.
+
+d=int(input("введите натуральное число:"))
+a=[]
+for i in range (2, int(d)+1):
+    for u in range (2, int(d)+1):
+        if d%u == 0:
+            a.append(u)
+            d=d/u
+            break
+print (a)
+
+Задайте последовательность чисел. Напишите программу,
+которая выведет список неповторяющихся элементов исходной последовательности.
+
+d=input()
+b=''
+for i in range (0,len(d)):
+    if d.count(d[i]) == 1:
+        b=b+(d[i])
+print (b)
+
+# Задана натуральная степень k. Сформировать случайным образом
+# список коэффициентов (значения от 0 до 100) многочлена и записать в файл многочлен степени k.
+#
+# Пример:
+#
+# - k=2 => 2*x² + 4*x + 5 = 0 или x² + 5 = 0 или 10*x² = 0
+
+import random as r
+d=int(input('введите степень уравнения'))
+p=''
+a = list(r.randint(2, 100) for i in range(0, d + 1))
+for i in range(0,d+1):
+    if 0 < i < d:
+        p=str(a[i])+'x^'+str(i+1)+'+'+p
+    elif i == 0:
+        p=str(a[i])+'x'+'+'+p
+    else:
+        p=p+str(a[i])+'=0'
+print (p)
+li=list(p.split('+'))
+print (li)
+for i in range (1, d+2):
+    if i > 1 and i != d+1:
+        p +=' или ' +  '+'.join(li)
+        li.remove(li[1])
+    elif i == 1:
+        li.remove(li[1])
+    elif i == d+1:
+        p += ' или ' + '+'.join(li) + '=0'
+    for a in range (0, len(li)):
+        if a < len(li)-1:
+            li[a]=str(r.randint(2,100)) + li[a][li[a].find('x'):]
+        elif a == len(li)-1 and i != d:
+            li[a]=str(r.randint(2,100)) + li[a][li[a].find('='):]
+        elif a == len(li)-1 and i == d:
+            li[a] = str(r.randint(2, 100)) + li[a][li[a].find('x'):]
+print (p)
+f = open ('dz4.txt', 'w')
+f.write (p)
+f.close ()
